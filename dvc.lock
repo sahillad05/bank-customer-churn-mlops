@@ -1,0 +1,54 @@
+schema: '2.0'
+stages:
+  preprocess:
+    cmd: python src/preprocess.py
+    deps:
+    - path: data/raw/Churn_Modelling.csv
+      hash: md5
+      md5: 496aee8fbfdfa1dfb6daa9dbca5d1a01
+      size: 684858
+    - path: params.yaml
+      hash: md5
+      md5: 922413b700fef62b982cf9c9aeced07b
+      size: 237
+    - path: src/preprocess.py
+      hash: md5
+      md5: ac1f5b8d481db7450129bdf9b7daa9e7
+      size: 2262
+    outs:
+    - path: data/processed/test.pkl
+      hash: md5
+      md5: 7344b0cd71efb8ab33a57928a63198d1
+      size: 240899
+    - path: data/processed/train.pkl
+      hash: md5
+      md5: 2e53571bcca63d665da72f1d3e2f45e9
+      size: 960899
+    - path: models/preprocessor.pkl
+      hash: md5
+      md5: b27ae23fdd9623b855158a3bccbf2bdf
+      size: 3562
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/processed/test.pkl
+      hash: md5
+      md5: 7344b0cd71efb8ab33a57928a63198d1
+      size: 240899
+    - path: data/processed/train.pkl
+      hash: md5
+      md5: 2e53571bcca63d665da72f1d3e2f45e9
+      size: 960899
+    - path: params.yaml
+      hash: md5
+      md5: 922413b700fef62b982cf9c9aeced07b
+      size: 237
+    - path: src/train.py
+      hash: md5
+      md5: de13b41c55f9ac0d9e5c9654c65a063e
+      size: 2629
+    outs:
+    - path: models/best_model.pkl
+      hash: md5
+      md5: fd6d8c3fb5fb5003468aa83dba1d3fae
+      size: 326224
