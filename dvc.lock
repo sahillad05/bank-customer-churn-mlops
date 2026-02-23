@@ -45,13 +45,13 @@ stages:
       size: 237
     - path: src/train.py
       hash: md5
-      md5: de13b41c55f9ac0d9e5c9654c65a063e
-      size: 2629
+      md5: fa880019d9c03323003376ec4db124ec
+      size: 3028
     outs:
     - path: models/best_model.pkl
       hash: md5
-      md5: fd6d8c3fb5fb5003468aa83dba1d3fae
-      size: 326224
+      md5: 99f96dd906e216e8cf8d1ddf68c41454
+      size: 341336
   evaluate:
     cmd: python src/evaluate.py
     deps:
@@ -61,8 +61,8 @@ stages:
       size: 240899
     - path: models/best_model.pkl
       hash: md5
-      md5: fd6d8c3fb5fb5003468aa83dba1d3fae
-      size: 326224
+      md5: 99f96dd906e216e8cf8d1ddf68c41454
+      size: 341336
     - path: src/evaluate.py
       hash: md5
       md5: 1fac23cbfb3a1ea5a114a0570a6df954
@@ -70,9 +70,9 @@ stages:
     outs:
     - path: reports/confusion_matrix.png
       hash: md5
-      md5: 0921f2d9c415185af96d3545e8eb90e9
-      size: 15728
+      md5: 3ed37aca1d844603dc0a7dfa1beb2269
+      size: 15244
     - path: reports/metrics.json
       hash: md5
-      md5: 54041b07dd6f251a0be1abab8e0bc64a
+      md5: 41d56f6dbea979d02c051f8428fc0d6e
       size: 64
