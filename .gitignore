@@ -1,0 +1,4 @@
+data/raw/Churn_Modelling.csv
+mlruns/
+__pycache__/
+.env
