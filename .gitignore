@@ -1,4 +1,4 @@
-data/raw/Churn_Modelling.csv
+data/processed/
+models/preprocessor.pkl
 mlruns/
 __pycache__/
-.env
