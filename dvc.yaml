@@ -1,0 +1,20 @@
+stages:
+  preprocess:
+    cmd: python src/preprocess.py
+    deps:
+    - data/raw/Churn_Modelling.csv
+    - params.yaml
+    - src/preprocess.py
+    outs:
+    - data/processed/test.pkl
+    - data/processed/train.pkl
+    - models/preprocessor.pkl
+  train:
+    cmd: python src/train.py
+    deps:
+    - data/processed/test.pkl
+    - data/processed/train.pkl
+    - params.yaml
+    - src/train.py
+    outs:
+    - models/best_model.pkl
