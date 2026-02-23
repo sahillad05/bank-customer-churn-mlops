@@ -18,3 +18,12 @@ stages:
     - src/train.py
     outs:
     - models/best_model.pkl
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - data/processed/test.pkl
+    - models/best_model.pkl
+    - src/evaluate.py
+    outs:
+    - reports/confusion_matrix.png
+    - reports/metrics.json
