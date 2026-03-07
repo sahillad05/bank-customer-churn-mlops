@@ -1,0 +1,16 @@
+.git
+.gitignore
+.dvc
+.dvcignore
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+env.bak/
+venv.bak/
+mlruns/
+.DS_Store
