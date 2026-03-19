@@ -23,7 +23,12 @@ jobs:
         pip install -r requirements.txt
         pip install pytest httpx
 
+    - name: Debug - List Files
+      run: ls -R
+
     - name: Run Tests
+      env:
+        PYTHONPATH: .
       run: |
         python -m pytest tests/
 
