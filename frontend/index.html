@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bank Customer Churn Predictor</title>
+  <meta name="description" content="AI-powered bank customer churn prediction dashboard. Enter customer details to predict churn risk instantly." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════ HEADER ═══════════════════ -->
+  <header class="header">
+    <div class="header-brand">
+      <div class="brand-icon">🏦</div>
+      <div class="brand-text">
+        <h1 class="brand-name">ChurnGuard AI</h1>
+        <span class="brand-subtitle">Bank Customer Intelligence Platform</span>
+      </div>
+    </div>
+    <div class="header-badge">
+      <span class="status-dot"></span>
+      <span>ML Model Active</span>
+    </div>
+  </header>
+
+  <!-- ═══════════════════ MAIN LAYOUT ═══════════════════ -->
+  <main class="main-layout">
+
+    <!-- ─── LEFT PANEL: Model Stats ─── -->
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <h2 class="sidebar-title">📊 Model Performance</h2>
+        <div id="metrics-container" class="metrics-grid">
+          <div class="metric-card skeleton">
+            <div class="metric-label">Loading...</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <h2 class="sidebar-title">🔢 Confusion Matrix</h2>
+        <div class="confusion-matrix-wrapper">
+          <img id="confusion-matrix-img" src="/confusion-matrix" alt="Confusion Matrix" class="confusion-matrix-img" />
+          <div id="cm-error" class="cm-error hidden">Could not load confusion matrix image.</div>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <h2 class="sidebar-title">ℹ️ About</h2>
+        <p class="about-text">
+          This dashboard uses a machine learning model trained on real bank customer data to
+          predict how likely a customer is to churn. Fill in customer details and press
+          <strong>Predict Churn Risk</strong> to get an instant AI-driven assessment.
+        </p>
+      </div>
+    </aside>
+
+    <!-- ─── RIGHT PANEL: Form + Results ─── -->
+    <section class="content-panel">
+
+      <div class="panel-header">
+        <h2 class="panel-title">📝 Customer Profile Analysis</h2>
+        <p class="panel-subtitle">Enter customer details below to generate a real-time churn risk prediction.</p>
+      </div>
+
+      <!-- FORM -->
+      <form id="prediction-form" novalidate>
+        <div class="form-grid">
+
+          <!-- COLUMN 1: Personal Details -->
+          <div class="form-group-card">
+            <h3 class="form-group-title">
+              <span class="group-icon">👤</span> Personal Details
+            </h3>
+            <div class="field-group">
+              <label class="field-label" for="geography">Geography</label>
+              <div class="select-wrapper">
+                <select id="geography" name="Geography" class="field-select" required>
+                  <option value="France">🇫🇷 France</option>
+                  <option value="Germany">🇩🇪 Germany</option>
+                  <option value="Spain">🇪🇸 Spain</option>
+                </select>
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="gender">Gender</label>
+              <div class="select-wrapper">
+                <select id="gender" name="Gender" class="field-select" required>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="age">Age <span class="field-range">(18 – 100)</span></label>
+              <input id="age" name="Age" type="number" class="field-input" min="18" max="100" value="40" required />
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="credit-score">Credit Score <span class="field-range">(300 – 900)</span></label>
+              <input id="credit-score" name="CreditScore" type="number" class="field-input" min="300" max="900" value="650" required />
+            </div>
+          </div>
+
+          <!-- COLUMN 2: Account Details -->
+          <div class="form-group-card">
+            <h3 class="form-group-title">
+              <span class="group-icon">🏦</span> Account Details
+            </h3>
+            <div class="field-group">
+              <label class="field-label" for="tenure">Tenure (Years) <span class="field-range">(0 – 10)</span></label>
+              <input id="tenure" name="Tenure" type="number" class="field-input" min="0" max="10" value="5" required />
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="balance">Account Balance ($)</label>
+              <input id="balance" name="Balance" type="number" class="field-input" min="0" max="300000" value="75000" step="100" required />
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="salary">Estimated Salary ($)</label>
+              <input id="salary" name="EstimatedSalary" type="number" class="field-input" min="0" max="300000" value="60000" step="500" required />
+            </div>
+          </div>
+
+          <!-- COLUMN 3: Product & Activity -->
+          <div class="form-group-card">
+            <h3 class="form-group-title">
+              <span class="group-icon">📦</span> Product &amp; Activity
+            </h3>
+            <div class="field-group">
+              <label class="field-label" for="num-products">Number of Products <span class="field-range">(1 – 4)</span></label>
+              <input id="num-products" name="NumOfProducts" type="number" class="field-input" min="1" max="4" value="1" required />
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="has-cc">Has Credit Card</label>
+              <div class="select-wrapper">
+                <select id="has-cc" name="HasCrCard" class="field-select" required>
+                  <option value="1">✅ Yes</option>
+                  <option value="0">❌ No</option>
+                </select>
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="active-member">Is Active Member</label>
+              <div class="select-wrapper">
+                <select id="active-member" name="IsActiveMember" class="field-select" required>
+                  <option value="1">✅ Yes</option>
+                  <option value="0">❌ No</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /form-grid -->
+
+        <!-- PREDICT BUTTON -->
+        <div class="form-actions">
+          <button type="submit" id="predict-btn" class="predict-btn">
+            <span class="btn-icon">🔍</span>
+            <span class="btn-text">Predict Churn Risk</span>
+            <span class="btn-loader hidden">
+              <span class="spinner"></span> Analyzing...
+            </span>
+          </button>
+        </div>
+
+      </form>
+
+      <!-- ─── RESULTS PANEL ─── -->
+      <div id="results-panel" class="results-panel hidden">
+        <div class="results-header">
+          <h2 class="results-title">🎯 Prediction Results</h2>
+        </div>
+
+        <div class="results-grid">
+          <!-- Probability Ring -->
+          <div class="result-card ring-card">
+            <div class="ring-wrapper">
+              <svg class="ring-svg" viewBox="0 0 120 120">
+                <circle class="ring-bg" cx="60" cy="60" r="50" />
+                <circle id="ring-fill" class="ring-fill" cx="60" cy="60" r="50"
+                  stroke-dasharray="314" stroke-dashoffset="314" />
+              </svg>
+              <div class="ring-center">
+                <span id="churn-prob-display" class="ring-value">0%</span>
+                <span class="ring-label">Churn Risk</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stats Cards -->
+          <div class="result-stats">
+            <div class="stat-box">
+              <span class="stat-label">Churn Probability</span>
+              <span id="churn-prob-stat" class="stat-value churn-color">—</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">Retention Probability</span>
+              <span id="retention-prob-stat" class="stat-value retain-color">—</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">Final Prediction</span>
+              <span id="prediction-label" class="stat-value">—</span>
+            </div>
+          </div>
+
+          <!-- Risk Badge + Recommendation -->
+          <div class="risk-card">
+            <div id="risk-badge" class="risk-badge">—</div>
+            <p id="recommendation-text" class="recommendation-text">—</p>
+          </div>
+        </div>
+
+        <!-- Error display -->
+        <div id="api-error" class="api-error hidden"></div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span>Bank Customer Churn Predictor &nbsp;|&nbsp; Powered by Machine Learning &nbsp;|&nbsp; For Internal Use Only</span>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

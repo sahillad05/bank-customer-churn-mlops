@@ -3,61 +3,57 @@
 ![MLOps](https://img.shields.io/badge/MLOps-DVC%20%7C%20MLflow-blue)
 ![Python](https://img.shields.io/badge/Python-3.9-green)
 ![Docker](https://img.shields.io/badge/Docker-Ready-blue)
-![Streamlit](https://img.shields.io/badge/Streamlit-App-red)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688)
+![Frontend](https://img.shields.io/badge/HTML5/CSS3/JS-Premium%20UI-orange)
 
-An end-to-end Machine Learning Operations (MLOps) project that predicts whether a bank customer is likely to churn. The project incorporates model versioning, experiment tracking, pipeline orchestration, and a web-based prediction dashboard.
+An end-to-end Machine Learning Operations (MLOps) project that predicts whether a bank customer is likely to churn. This project features a enterprise-grade architecture with a FastAPI backend and a custom, high-performance HTML/CSS/JS dashboard.
 
 ## 🌟 Key Features
 
-- **ML Pipeline Orchestration**: Uses Data Version Control (**DVC**) to define and manage reproducible data preprocessing, training, and evaluation stages.
-- **Experiment Tracking**: Utilizes **MLflow** to track model parameters, metrics (Accuracy, F1 Score), and save the best-performing model artifacts (Logistic Regression, Random Forest, XGBoost).
-- **Interactive Dashboard**: A user-friendly **Streamlit** web application for real-time customer churn prediction and risk assessment.
+- **Production API Layer**: Powered by **FastAPI** for high-performance, asynchronous model serving.
+- **Premium Dark Dashboard**: A custom-built **HTML/CSS/JS** frontend with glassmorphism, animated risk charts, and real-time response handling.
+- **ML Pipeline Orchestration**: Uses **DVC** to manage reproducible data preprocessing, training, and evaluation stages.
+- **Experiment Tracking**: Utilizes **MLflow** to track model parameters, metrics (Accuracy, F1 Score), and save the best-performing model artifacts.
 - **Dockerized**: Fully containerized for consistent and easy deployment across environments.
 
 ## 📂 Project Structure
 
 ```text
 bank-customer-churn-mlops/
-│
-├── app/
-│   └── app.py                  # Streamlit web dashboard application
-├── data/
-│   ├── raw/                    # Original raw dataset
-│   └── processed/              # Processed train/test data splits (Pickle/CSV)
-├── models/                     # Saved preprocessor and best ML model artifacts
-├── reports/                    # Generated metrics (JSON) and plots (Confusion Matrix)
-├── src/                        # Machine Learning Pipeline source code
-│   ├── preprocess.py           # Data cleaning, scaling, and encoding
-│   ├── train.py                # Model training and MLflow tracking
-│   └── evaluate.py             # Model evaluation and report generation
-│
-├── dvc.yaml                    # DVC pipeline stages definition
-├── params.yaml                 # Configuration parameters for ML pipeline
-├── requirements.txt            # Python dependencies
-├── Dockerfile                  # Instructions for containerizing the app
-└── .dockerignore               # Files omitted from the Docker context
+├── backend/            # FastAPI server and prediction logic (main.py)
+├── frontend/           # Premium web dashboard (HTML, CSS, JS)
+├── data/               # Raw and processed datasets (DVC tracked)
+├── models/             # Saved model and preprocessor artifacts
+├── src/                # ML Pipeline source code (preprocess, train, evaluate)
+├── reports/            # Generated metrics and confusion matrix plots
+├── dvc.yaml            # DVC pipeline stages definition
+├── params.yaml         # Centralized configuration parameters
+├── requirements.txt    # Python dependencies
+└── Dockerfile          # Container instructions (Port 8000)
 ```
 
 ## 🚀 Getting Started
 
-### 1. Local Setup
+### 1. Local Setup (Anaconda)
 
-**Clone the repository and install dependencies:**
+**Create and activate the environment:**
 ```bash
-git clone <your-repository-url>
-cd bank-customer-churn-mlops
+conda create -n churn-mlops python=3.9 -y
+conda activate churn-mlops
+```
+
+**Install dependencies:**
+```bash
 pip install -r requirements.txt
 ```
 
-**Run the Streamlit Dashboard:**
+**Run the Production Dashboard:**
 ```bash
-streamlit run app/app.py
+python -m uvicorn backend.main:app --host 0.0.0.0 --port 8000
 ```
-*The app will be available at `http://localhost:8501`*
+*Access the dashboard at `http://localhost:8000`*
 
 ### 2. Docker Setup
-
-Ensure you have Docker Desktop running.
 
 **Build the image:**
 ```bash
@@ -66,26 +62,26 @@ docker build -t bank-customer-churn-mlops .
 
 **Run the container:**
 ```bash
-docker run -p 8501:8501 bank-customer-churn-mlops
+docker run -p 8000:8000 bank-customer-churn-mlops
 ```
-*The app will be available at `http://localhost:8501`*
+*Access the dashboard at `http://localhost:8000`*
 
 ## 🔄 Running the ML Pipeline
 
-This project uses DVC to manage the ML pipeline defined in `dvc.yaml`. If you wish to retrain the models (e.g., after altering hyperparameters in `params.yaml`), run:
+This project uses DVC to manage the ML pipeline. To retrain models after modifying `params.yaml`:
 
 ```bash
 dvc repro
 ```
 
 This will automatically:
-1. Run `src/preprocess.py` to prepare the data.
-2. Run `src/train.py` to train models and track them via MLflow, dynamically accounting for class imbalances.
-3. Run `src/evaluate.py` to generate the final confusion matrix and evaluation metrics.
+1. Run `src/preprocess.py` to prepare data.
+2. Run `src/train.py` to train models and track them via MLflow.
+3. Run `src/evaluate.py` to generate final reports.
 
 ## 📊 Viewing MLflow Experiments
 
-To view the logged experiments, runs, and model metrics, start the MLflow server:
+To view the logged experiments and model metrics:
 
 ```bash
 mlflow ui
