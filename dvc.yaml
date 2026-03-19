@@ -2,7 +2,7 @@ stages:
   preprocess:
     cmd: python src/preprocess.py
     deps:
-    - data/raw/Churn_Modelling.csv
+    - data/raw/New_Data.csv
     - params.yaml
     - src/preprocess.py
     outs:

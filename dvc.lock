@@ -3,18 +3,18 @@ stages:
   preprocess:
     cmd: python src/preprocess.py
     deps:
-    - path: data/raw/Churn_Modelling.csv
+    - path: data/raw/New_Data.csv
       hash: md5
       md5: 496aee8fbfdfa1dfb6daa9dbca5d1a01
       size: 684858
     - path: params.yaml
       hash: md5
-      md5: 922413b700fef62b982cf9c9aeced07b
+      md5: 4d440feacb36cfaaa3d1b23f18a8877f
       size: 237
     - path: src/preprocess.py
       hash: md5
-      md5: ac1f5b8d481db7450129bdf9b7daa9e7
-      size: 2262
+      md5: 2b4d3dc7383b147cbbc581614dee5940
+      size: 2255
     outs:
     - path: data/processed/test.pkl
       hash: md5
@@ -41,7 +41,7 @@ stages:
       size: 960899
     - path: params.yaml
       hash: md5
-      md5: 922413b700fef62b982cf9c9aeced07b
+      md5: 4d440feacb36cfaaa3d1b23f18a8877f
       size: 237
     - path: src/train.py
       hash: md5
@@ -50,8 +50,8 @@ stages:
     outs:
     - path: models/best_model.pkl
       hash: md5
-      md5: e4fb28a04547c45882d5af6be3712ed7
-      size: 341251
+      md5: aca63daefc5c01a0c28698013a70e403
+      size: 453539
   evaluate:
     cmd: python src/evaluate.py
     deps:
@@ -61,8 +61,8 @@ stages:
       size: 240899
     - path: models/best_model.pkl
       hash: md5
-      md5: e4fb28a04547c45882d5af6be3712ed7
-      size: 341251
+      md5: aca63daefc5c01a0c28698013a70e403
+      size: 453539
     - path: src/evaluate.py
       hash: md5
       md5: 1fac23cbfb3a1ea5a114a0570a6df954
@@ -70,9 +70,9 @@ stages:
     outs:
     - path: reports/confusion_matrix.png
       hash: md5
-      md5: a4dfd5a6d70c7dec6f2db89b41f6e1e7
-      size: 15243
+      md5: 3f445a27698c8081996ac8d2ef31aa48
+      size: 15329
     - path: reports/metrics.json
       hash: md5
-      md5: 41d56f6dbea979d02c051f8428fc0d6e
+      md5: 9f924e8fb356081ea44e0c514b4681d3
       size: 64

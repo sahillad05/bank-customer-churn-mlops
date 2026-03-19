@@ -77,7 +77,7 @@ def save_data(X_train, X_test, y_train, y_test, preprocessor):
 
 if __name__ == "__main__":
 
-    df = load_data("data/raw/Churn_Modelling.csv")
+    df = load_data("data/raw/New_Data.csv")
 
     X_train, X_test, y_train, y_test, preprocessor = preprocess_data(df)
 

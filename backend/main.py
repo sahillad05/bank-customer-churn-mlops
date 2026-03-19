@@ -8,27 +8,22 @@ import pandas as pd
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
+from contextlib import asynccontextmanager
 from pydantic import BaseModel
 
 # ──────────────────────────────────────────────
 # App setup
 # ──────────────────────────────────────────────
-app = FastAPI(title="Bank Churn Predictor API", version="1.0.0")
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 MODELS_DIR = BASE_DIR / "models"
 REPORTS_DIR = BASE_DIR / "reports"
 STATIC_DIR = BASE_DIR / "frontend"
 
-# ──────────────────────────────────────────────
-# Load ML artifacts at startup
-# ──────────────────────────────────────────────
 model = None
 preprocessor = None
 
-
-@app.on_event("startup")
-def load_artifacts():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     global model, preprocessor
     try:
         model = joblib.load(MODELS_DIR / "best_model.pkl")
@@ -36,6 +31,16 @@ def load_artifacts():
         print("Model and preprocessor loaded successfully.")
     except Exception as e:
         print(f"Could not load model artifacts: {e}")
+    yield
+    # Clean up if needed
+    model = None
+    preprocessor = None
+
+app = FastAPI(
+    title="Bank Churn Predictor API", 
+    version="1.0.0",
+    lifespan=lifespan
+)
 
 
 # ──────────────────────────────────────────────
